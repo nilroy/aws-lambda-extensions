@@ -39,7 +39,7 @@ Resources:
       Description: Send logs to kinesis stream using logs API Extension in Go
       ContentUri: .
       CompatibleRuntimes:
-      - nodejs12.x
+      - node18.x
       - python3.8
       - java11
       - dotnetcore3.1
@@ -54,7 +54,7 @@ Resources:
       FunctionName: kinesis-stream-logs-extension-demo-function
       CodeUri: hello-world/
       Handler: app.lambdaHandler
-      Runtime: nodejs12.x
+      Runtime: node18.x
       Layers:
       - !Ref KinesisStreamLogsApiExtensionLayer
       Environment:

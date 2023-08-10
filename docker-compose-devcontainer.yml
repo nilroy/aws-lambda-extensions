@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  devcontainer: 
+    build:
+      context: .
+      dockerfile: Dockerfile-devcontainer
+      args:
+        USER_NAME: ${USER}
+        USER_SHELL: ${SHELL}
+      pull: true
+    environment:
+      - PAGERDUTY_TOKEN
+    volumes:
+      - "${HOME}/.config:/home/${USER}/.config"
+      - "${HOME}/.oh-my-zsh:/home/${USER}/.oh-my-zsh:ro"
+      - "${HOME}/.zshrc:/home/${USER}/.zshrc:ro"
+      - "${HOME}/.bashrc:/home/${USER}/.bashrc:ro"
+      - "${HOME}/.npmrc:/home/${USER}/.npmrc:ro"
+      - "${HOME}/.zsh_history:/home/${USER}/.zsh_history"
+      - "${HOME}/.bash_history:/home/${USER}/.bash_history"

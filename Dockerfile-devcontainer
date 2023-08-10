@@ -1,0 +1,35 @@
+FROM dev.smartly.af/devcontainer-base:2.0.0
+
+ARG USER_NAME
+ARG USER_SHELL
+
+LABEL author="Nilanjan Roy"
+LABEL email="nilanjan.roy@smartly.io"
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME_DIR="/home/${USER_NAME}"
+ENV PYTHONPATH=/usr/local/lib
+
+USER root
+
+COPY .devcontainer/assets/setup.env /root/setup.env
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && . /root/setup.env \
+    && apt-get clean \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && useradd -u "${USER_ID}" -s "${USER_SHELL}" -d "${HOME_DIR}" -m "${USER_NAME}"  \
+    && mkdir -m 755 -p "${HOME_DIR}" \
+    && echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER_NAME}" \
+    && chmod 0440 "/etc/sudoers.d/${USER_NAME}" \
+    && chown -R "${USER_NAME}" "${HOME_DIR}" \
+    && rm -rf "/var/cache/apt/*" \
+    && apt-get clean
+
+
+USER "${USER_NAME}"
+WORKDIR "${HOME_DIR}"
+ENV PYTHONPATH=/usr/local/lib:/usr/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages:${PYTHONPATH}
+CMD [ "/bin/bash" ]

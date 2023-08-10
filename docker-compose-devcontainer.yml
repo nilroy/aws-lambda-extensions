@@ -13,6 +13,7 @@ services:
     volumes:
       - "${HOME}/.config:/home/${USER}/.config"
       - "${HOME}/.oh-my-zsh:/home/${USER}/.oh-my-zsh:ro"
+      - "${HOME}/.aws:/home/${USER}/.aws:ro"
       - "${HOME}/.zshrc:/home/${USER}/.zshrc:ro"
       - "${HOME}/.bashrc:/home/${USER}/.bashrc:ro"
       - "${HOME}/.npmrc:/home/${USER}/.npmrc:ro"

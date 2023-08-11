@@ -1,0 +1,6 @@
+aws lambda invoke \
+ --function-name "logs-extension-demo-function" \
+ --payload '{"payload": "hello"}' /tmp/invoke-result \
+ --cli-binary-format raw-in-base64-out \
+ --log-type Tail \
+ --region eu-central-1

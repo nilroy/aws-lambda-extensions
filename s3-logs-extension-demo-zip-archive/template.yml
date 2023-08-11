@@ -16,10 +16,12 @@ Resources:
   Function:
     Type: AWS::Serverless::Function
     Properties:
+      Architectures:
+        - arm64
       FunctionName: logs-extension-demo-function
       Description: Logs Extension Demo Function
       CodeUri: functionsrc/
-      Runtime: python3.8
+      Runtime: python3.10
       Handler: lambda_function.lambda_handler
       MemorySize: 128
       Timeout: 100
@@ -27,8 +29,8 @@ Resources:
         Variables:
           S3_BUCKET_NAME:
             Ref: LogExtensionsBucket
-      Layers:
-        - !Ref S3LogExtensionsLayer
+      # Layers:
+      #   - !Ref S3LogExtensionsLayer
       Policies:
         - S3WritePolicy:
             BucketName: !Ref LogExtensionsBucket
@@ -41,7 +43,7 @@ Resources:
       Description: Layer containing extension(s)
       ContentUri: extensionssrc/
       CompatibleRuntimes:
-        - python3.8
+        - python3.10
       LicenseInfo: 'Available under the MIT-0 license.'
       RetentionPolicy: Delete
     Metadata:

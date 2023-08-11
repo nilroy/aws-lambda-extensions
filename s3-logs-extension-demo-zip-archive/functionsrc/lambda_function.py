@@ -3,6 +3,7 @@
 
 import json
 import os
+import requests
 
 def lambda_handler(event, context):
     print(f"Function: Logging something which logging extension will send to S3")

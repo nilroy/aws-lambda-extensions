@@ -21,7 +21,7 @@ Resources:
       FunctionName: logs-extension-demo-function
       Description: Logs Extension Demo Function
       CodeUri: functionsrc/
-      Runtime: python3.9
+      Runtime: python3.10
       Handler: lambda_function.lambda_handler
       MemorySize: 128
       Timeout: 100
@@ -44,7 +44,7 @@ Resources:
       Description: Layer containing extension(s)
       ContentUri: extensionssrc/
       CompatibleRuntimes:
-        - python3.9
+        - python3.10
       LicenseInfo: 'Available under the MIT-0 license.'
       RetentionPolicy: Delete
     Metadata:

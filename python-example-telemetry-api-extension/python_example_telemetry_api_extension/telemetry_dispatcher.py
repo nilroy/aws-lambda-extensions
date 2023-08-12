@@ -62,6 +62,7 @@ def dispatch_telmetery(queue, force):
                     + ".log"
                 )
                 # content = str(batch[item])
+                batch[item]["functionName"] = os.getenv("AWS_LAMBDA_FUNCTION_NAME")
                 content = json.dumps(batch[item])
                 response = s3.Bucket(s3_bucket).put_object(Key=s3_filename, Body=content)
         except Exception as e:

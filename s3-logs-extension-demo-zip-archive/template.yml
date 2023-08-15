@@ -29,7 +29,7 @@ Resources:
         Variables:
           S3_BUCKET_NAME:
             Ref: LogExtensionsBucket
-          DISPATCH_MIN_BATCH_SIZE: 2
+          DISPATCH_MIN_BATCH_SIZE: 1
       # Layers:
       #   - !Ref S3LogExtensionsLayer
       Policies:

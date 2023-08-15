@@ -8,13 +8,7 @@ from datetime import datetime
 
 
 def lambda_handler(event, context):
-    # print(f"Function: Logging something which logging extension will send to S3")
-    # log = {
-    #     "timestamp": datetime.now().isoformat(),
-    #     "message": "Logging something which logging extension will send to S3",
-    #     "functionName": os.getenv("AWS_LAMBDA_FUNCTION_NAME"),
-    #     "type": "LambdFunction",
-    # }
-    # print(json.dumps(log))
-    print("Logging something which logging extension will send to S3")
+    print(f"Function: Logging something which logging extension will send to S3")
+    # log = {"log": "Logging something which logging extension will send to S3"}
+    # print(log)
     return {"statusCode": 200, "body": json.dumps("Hello from Lambda!")}

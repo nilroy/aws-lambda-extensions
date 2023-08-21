@@ -27,7 +27,7 @@ Resources:
       Timeout: 100
       Environment:
         Variables:
-          S3_BUCKET_NAME:
+          LOG_BUCKET_NAME:
             Ref: LogExtensionsBucket
           DISPATCH_MIN_BATCH_SIZE: 1
       # Layers:
@@ -38,17 +38,17 @@ Resources:
 ##########################################################################
 #  Lambda layers                                                         #
 ##########################################################################
-  S3LogExtensionsLayer:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      Description: Layer containing extension(s)
-      ContentUri: extensionssrc/
-      CompatibleRuntimes:
-        - python3.10
-      LicenseInfo: 'Available under the MIT-0 license.'
-      RetentionPolicy: Delete
-    Metadata:
-      BuildMethod: makefile
+  # S3LogExtensionsLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Properties:
+  #     Description: Layer containing extension(s)
+  #     ContentUri: extensionssrc/
+  #     CompatibleRuntimes:
+  #       - python3.10
+  #     LicenseInfo: 'Available under the MIT-0 license.'
+  #     RetentionPolicy: Delete
+  #   Metadata:
+  #     BuildMethod: makefile
 ##########################################################################
 #  S3 Resources                                                   #
 ##########################################################################
@@ -64,9 +64,9 @@ Resources:
 #  OUTPUTS                                                               #
 ##########################################################################
 Outputs:
-  ExtensionsLayer:
-    Value: !Ref S3LogExtensionsLayer
-    Description: Log Extension Layer ARN
+  # ExtensionsLayer:
+  #   Value: !Ref S3LogExtensionsLayer
+  #   Description: Log Extension Layer ARN
   Function:
     Value: !Ref Function
     Description: Lambda Function

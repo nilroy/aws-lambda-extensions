@@ -2,7 +2,7 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-"""'exec python -u -- "$0" ${1+"$@"} # """
+''''exec python -u -- "$0" ${1+"$@"} # '''
 import os
 import sys
 from pathlib import Path
@@ -21,6 +21,7 @@ from logs_api_http_extension.logs_api_client import LogsAPIClient
 from logs_api_http_extension.extensions_api_client import ExtensionsAPIClient
 
 from queue import Queue
+import json
 
 """Here is the sample extension code.
     - The extension runs two threads. The "main" thread, will register with the Extension API and process its invoke and
@@ -45,7 +46,6 @@ Note:
     `chmod +x logs_api_http_extension.py`
 
 """
-import json
 
 
 class LogsAPIHTTPExtension:

@@ -23,6 +23,7 @@ Resources:
       CodeUri: functionsrc/
       Runtime: python3.10
       Handler: lambda_function.lambda_handler
+      Role: !GetAtt TestLambdaRole.Arn
       MemorySize: 128
       Timeout: 100
       Environment:
@@ -37,6 +38,70 @@ Resources:
       Policies:
         - S3WritePolicy:
             BucketName: !Ref LogExtensionsBucket
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref TestSecutiyGroup
+        SubnetIds:
+          - subnet-013b434c4a4c099a1 
+          - subnet-03ffe62e6bff3c485  
+          - subnet-0f97f57b120ce19ef 
+##########################################################################
+# VPC Configuration                                                      #
+##########################################################################
+
+  TestSecutiyGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow ingress from all resources in the environment
+      VpcId: vpc-0c88a7f58adbcdc58
+      GroupName: TestSecutiyGroup-lambda-telemetry
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 10.242.0.0/16
+            
+
+  TestLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: TestLambdaRole-lambda-telemetry
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CloudWatchLogsAccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${Function}:*"
+        - PolicyName: LogBucketPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListAllMyBuckets
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                  - s3:PutLifecycleConfiguration
+                Resource:
+                  - !Sub "arn:aws:s3:::${LogExtensionsBucket}/*"
+                  - !Sub "arn:aws:s3:::${LogExtensionsBucket}"
+
 ##########################################################################
 #  Lambda layers                                                         #
 ##########################################################################

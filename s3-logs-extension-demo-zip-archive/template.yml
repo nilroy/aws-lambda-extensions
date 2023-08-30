@@ -42,12 +42,23 @@ Resources:
         SecurityGroupIds:
           - !Ref TestSecutiyGroup
         SubnetIds:
-          - subnet-013b434c4a4c099a1 
-          - subnet-03ffe62e6bff3c485  
-          - subnet-0f97f57b120ce19ef 
+          - subnet-013b434c4a4c099a1 #Private Subnet
+          - subnet-03ffe62e6bff3c485 #Private Subnet 
+          - subnet-0f97f57b120ce19ef #Private Subnet
+          # - subnet-09cb4c5725089323d #Public Subnet
+          # - subnet-0eb7a6ceaa162abd1 #Public Subnet
+          # - subnet-0636a6b76ec5c82db #Public Subnet
+
 ##########################################################################
-# VPC Configuration                                                      #
+# VPC Configuration
+# IAM Configuration
+# Log groups                                                     
 ##########################################################################
+  FunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${Function}"
+      RetentionInDays: 1
 
   TestSecutiyGroup:
     Type: AWS::EC2::SecurityGroup
@@ -81,10 +92,32 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
+                  - logs:GetLogEvents
+                  - logs:DeleteLogStream
                   - logs:PutLogEvents
-                Resource: "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/logs-extension-demo-function:*"
+                Resource: "arn:aws:logs:*:245460010244:log-group:*:log-stream:*"
+              - Effect: Allow
+                Action:
+                  - logs:GetDataProtectionPolicy
+                  - logs:CreateLogStream
+                  - logs:GetLogRecord
+                  - logs:GetQueryResults
+                  - logs:DescribeLogStreams
+                  - logs:StartQuery
+                  - logs:Unmask
+                  - logs:FilterLogEvents
+                  - logs:GetLogGroupFields
+                  - logs:CreateLogGroup
+                Resource: "arn:aws:logs:*:245460010244:log-group:*"
+              - Effect: Allow
+                Action:
+                  - logs:DescribeLogGroups
+                  - logs:StartLiveTail
+                  - logs:StopLiveTail
+                  - logs:StopQuery
+                  - logs:TestMetricFilter
+                  - logs:GetLogDelivery
+                Resource: "*"
         - PolicyName: LogBucketPolicy
           PolicyDocument:
             Version: '2012-10-17'
@@ -101,6 +134,17 @@ Resources:
                 Resource:
                   - !Sub "arn:aws:s3:::${LogExtensionsBucket}/*"
                   - !Sub "arn:aws:s3:::${LogExtensionsBucket}"
+        - PolicyName: VPCAccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:CreateNetworkInterface
+                  - ec2:DescribeNetworkInterfaces
+                  - ec2:DeleteNetworkInterface
+                Resource: "*"
+          
 
 ##########################################################################
 #  Lambda layers                                                         #

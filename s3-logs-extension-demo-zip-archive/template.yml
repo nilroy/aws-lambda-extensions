@@ -13,6 +13,45 @@ Resources:
 ##########################################################################
 #  Lambda functions                                                      #
 ##########################################################################
+
+# CAIL Lambda Function test with VPC
+  # Function:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Architectures:
+  #       - arm64
+  #     FunctionName: logs-extension-demo-function
+  #     Description: Logs Extension Demo Function
+  #     CodeUri: functionsrc/
+  #     Runtime: python3.10
+  #     Handler: lambda_function.lambda_handler
+  #     Role: !GetAtt TestLambdaRole.Arn
+  #     MemorySize: 128
+  #     Timeout: 100
+  #     Environment:
+  #       Variables:
+  #         LOG_BUCKET_NAME:
+  #           Ref: LogExtensionsBucket
+  #         DISPATCH_MIN_BATCH_SIZE: 1
+  #         S3_BUCKET_NAME:
+  #           Ref: LogExtensionsBucket
+  #     Layers:
+  #       - !Ref S3LogExtensionsLayer
+  #     Policies:
+  #       - S3WritePolicy:
+  #           BucketName: !Ref LogExtensionsBucket
+  #     VpcConfig:
+  #       SecurityGroupIds:
+  #         - !Ref TestSecutiyGroup
+  #       SubnetIds:
+  #         - subnet-013b434c4a4c099a1 #Private Subnet
+  #         - subnet-03ffe62e6bff3c485 #Private Subnet 
+  #         - subnet-0f97f57b120ce19ef #Private Subnet
+  #         # - subnet-09cb4c5725089323d #Public Subnet
+  #         # - subnet-0eb7a6ceaa162abd1 #Public Subnet
+  #         # - subnet-0636a6b76ec5c82db #Public Subnet
+
+# lambda function without VPC
   Function:
     Type: AWS::Serverless::Function
     Properties:
@@ -30,24 +69,14 @@ Resources:
         Variables:
           LOG_BUCKET_NAME:
             Ref: LogExtensionsBucket
-          DISPATCH_MIN_BATCH_SIZE: 1
+          DISPATCH_MIN_BATCH_SIZE: 5
           S3_BUCKET_NAME:
             Ref: LogExtensionsBucket
-      Layers:
-        - !Ref S3LogExtensionsLayer
+      # Layers:
+      #   - !Ref S3LogExtensionsLayer
       Policies:
         - S3WritePolicy:
             BucketName: !Ref LogExtensionsBucket
-      VpcConfig:
-        SecurityGroupIds:
-          - !Ref TestSecutiyGroup
-        SubnetIds:
-          - subnet-013b434c4a4c099a1 #Private Subnet
-          - subnet-03ffe62e6bff3c485 #Private Subnet 
-          - subnet-0f97f57b120ce19ef #Private Subnet
-          # - subnet-09cb4c5725089323d #Public Subnet
-          # - subnet-0eb7a6ceaa162abd1 #Public Subnet
-          # - subnet-0636a6b76ec5c82db #Public Subnet
 
 ##########################################################################
 # VPC Configuration
@@ -60,17 +89,17 @@ Resources:
       LogGroupName: !Sub "/aws/lambda/${Function}"
       RetentionInDays: 1
 
-  TestSecutiyGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Allow ingress from all resources in the environment
-      VpcId: vpc-0c88a7f58adbcdc58
-      GroupName: TestSecutiyGroup-lambda-telemetry
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 0
-          ToPort: 65535
-          CidrIp: 10.242.0.0/16
+  # TestSecutiyGroup:
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties:
+  #     GroupDescription: Allow ingress from all resources in the environment
+  #     VpcId: vpc-0c88a7f58adbcdc58
+  #     GroupName: TestSecutiyGroup-lambda-telemetry
+  #     SecurityGroupIngress:
+  #       - IpProtocol: tcp
+  #         FromPort: 0
+  #         ToPort: 65535
+  #         CidrIp: 10.242.0.0/16
             
 
   TestLambdaRole:

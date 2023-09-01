@@ -140,25 +140,25 @@ def lambda_handler(event, context):
         "line": "72",
     }
 
-    # creaint_prod_infra_creative_ingestion_enqueuer_Enqueuer_log = {
-    #     "message": "ReceivedEnqueueRequest",
-    #     "timestamp": "2023-08-25T10:17:04.352213+0000",
-    #     "level": "INFO",
-    #     "line": "15",
-    #     "name": "enqueuer.app.main",
-    #     "project": "infra-creative-ingestion-enqueuer",
-    #     "process": "16",
-    #     "module": "main",
-    #     "thread": "140058610808640",
-    #     "file": "main.py",
-    #     "aws_request_id": "411ad72f-e4b2-412a-a233-cd7f2649ac8b",
-    #     "team": "CREAINT",
-    # }
+    creaint_prod_infra_creative_ingestion_enqueuer_Enqueuer_log = {
+        "message": "ReceivedEnqueueRequest",
+        "timestamp": "2023-08-25T10:17:04.352213+0000",
+        "level": "INFO",
+        "line": "15",
+        "name": "enqueuer.app.main",
+        "project": "infra-creative-ingestion-enqueuer",
+        "process": "16",
+        "module": "main",
+        "thread": "140058610808640",
+        "file": "main.py",
+        "aws_request_id": "411ad72f-e4b2-412a-a233-cd7f2649ac8b",
+        "team": "CREAINT",
+    }
 
-    # print(json.dumps(snsEventMsg))
-    # print(json.dumps(checkCutoffDateAndProcessMsgs))
-    # print(json.dumps(cutoffDate))
-    # print(json.dumps(deleteMsgInvalidSchema))
-    # print(json.dumps(creaint_prod_infra_creative_ingestion_enqueuer_Enqueuer_log))
+    print(json.dumps(snsEventMsg))
+    print(json.dumps(checkCutoffDateAndProcessMsgs))
+    print(json.dumps(cutoffDate))
+    print(json.dumps(deleteMsgInvalidSchema))
+    print(json.dumps(creaint_prod_infra_creative_ingestion_enqueuer_Enqueuer_log))
 
     return {"statusCode": 200, "body": json.dumps("Hello from Lambda!")}

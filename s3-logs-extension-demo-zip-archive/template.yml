@@ -121,31 +121,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - logs:GetLogEvents
-                  - logs:DeleteLogStream
-                  - logs:PutLogEvents
-                Resource: "arn:aws:logs:*:245460010244:log-group:*:log-stream:*"
-              - Effect: Allow
-                Action:
-                  - logs:GetDataProtectionPolicy
-                  - logs:CreateLogStream
-                  - logs:GetLogRecord
-                  - logs:GetQueryResults
-                  - logs:DescribeLogStreams
-                  - logs:StartQuery
-                  - logs:Unmask
-                  - logs:FilterLogEvents
-                  - logs:GetLogGroupFields
-                  - logs:CreateLogGroup
-                Resource: "arn:aws:logs:*:245460010244:log-group:*"
-              - Effect: Allow
-                Action:
-                  - logs:DescribeLogGroups
-                  - logs:StartLiveTail
-                  - logs:StopLiveTail
-                  - logs:StopQuery
-                  - logs:TestMetricFilter
-                  - logs:GetLogDelivery
+                  - "logs:*"
                 Resource: "*"
         - PolicyName: LogBucketPolicy
           PolicyDocument:

@@ -23,7 +23,7 @@ def lambda_handler(event, context):
     snsEventMsg = {
         "message": "CloudWatch alarm event, new state value: CloudWatchAlarmState.ALARM sent to slack. Status: 200",
         "team": "CREAINT",
-        "timestamp": "2023-08-22T22:11:46.579660+0000",
+        "timestamp": datetime.now().isoformat(),
         "name": "slacksender.app.main",
         "module": "main",
         "project": "ci-infra-cw-alerts-to-slack",
@@ -35,7 +35,7 @@ def lambda_handler(event, context):
     }
 
     checkCutoffDateAndProcessMsgs = {
-        "timestamp": "2023-08-18T19:37:48.955309+0000",
+        "timestamp": datetime.now().isoformat(),
         "level": "INFO",
         "message": {
             "description": "checkCutoffDateAndProcessMsgs",
@@ -54,7 +54,7 @@ def lambda_handler(event, context):
     }
 
     cutoffDate = {
-        "timestamp": "2023-07-20T17:29:21.493921+0000",
+        "timestamp": datetime.now().isoformat(),
         "level": "DEBUG",
         "message": {
             "description": "cutoffDate",
@@ -74,7 +74,7 @@ def lambda_handler(event, context):
     }
 
     deleteMsgInvalidSchema = {
-        "timestamp": "2023-07-20T17:24:25.949960+0000",
+        "timestamp": datetime.now().isoformat(),
         "level": "DEBUG",
         "message": {
             "description": "deleteMsgInvalidSchema",
@@ -142,7 +142,7 @@ def lambda_handler(event, context):
 
     creaint_prod_infra_creative_ingestion_enqueuer_Enqueuer_log = {
         "message": "ReceivedEnqueueRequest",
-        "timestamp": "2023-08-25T10:17:04.352213+0000",
+        "timestamp": datetime.now().isoformat(),
         "level": "INFO",
         "line": "15",
         "name": "enqueuer.app.main",

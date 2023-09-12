@@ -73,6 +73,8 @@ Resources:
           LOG_TRANSPORT: s3
           S3_BUCKET_NAME:
             Ref: LogExtensionsBucket
+          ENABLE_TELEMETRY_EXTENSION_METRICS: "true"
+          ENABLE_TELEMETRY_EXTENSION_LOGGING: "true"
       # Layers:
       #   - !Ref S3LogExtensionsLayer
       Policies:
@@ -140,6 +142,10 @@ Resources:
                 Resource:
                   - !Sub "arn:aws:s3:::${LogExtensionsBucket}/*"
                   - !Sub "arn:aws:s3:::${LogExtensionsBucket}"
+              - Effect: Allow
+                Action:
+                  - cloudwatch:PutMetricData
+                Resource: "*"
         - PolicyName: VPCAccessPolicy
           PolicyDocument:
             Version: '2012-10-17'

@@ -67,14 +67,14 @@ Resources:
       Timeout: 100
       Environment:
         Variables:
-          LOG_BUCKET_NAME:
-            Ref: LogExtensionsBucket
+          # LOG_BUCKET_NAME:
+          #   Ref: LogExtensionsBucket
           DISPATCH_MIN_BATCH_SIZE: 5
           LOG_TRANSPORT: kinesis
-          S3_BUCKET_NAME:
-            Ref: LogExtensionsBucket
+          # S3_BUCKET_NAME:
+          #   Ref: LogExtensionsBucket
           ENABLE_TELEMETRY_EXTENSION_METRICS: "true"
-          ENABLE_TELEMETRY_EXTENSION_LOGGING: true
+          ENABLE_TELEMETRY_EXTENSION_LOGGING: "true"
           LOG_STREAM_NAME:
             Ref: KinesisStream
       # Layers:
@@ -216,29 +216,12 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Sub "${AWS::StackName}-dynamodb-table"
-      # BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: leaseKey
           AttributeType: S
-        - AttributeName: shardId
-          AttributeType: S
-        - AttributeName: ownerSwitchesSinceCheckpoint
-          AttributeType: N
       KeySchema:
         - AttributeName: leaseKey
-          KeyType: "HASH"
-      # GlobalSecondaryIndexes:
-      #   - IndexName: shardId-index
-      #     KeySchema:
-      #       - AttributeName: shardId
-      #         KeyType: HASH
-      #       - AttributeName: ownerSwitchesSinceCheckpoint
-      #         KeyType: RANGE
-      #     Projection:
-      #       ProjectionType: ALL
-      #     ProvisionedThroughput:
-      #       ReadCapacityUnits: 10
-      #       WriteCapacityUnits: 10      
+          KeyType: "HASH"   
       ProvisionedThroughput:
         ReadCapacityUnits: 10
         WriteCapacityUnits: 10

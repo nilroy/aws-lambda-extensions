@@ -15,10 +15,11 @@ def lambda_handler(event, context):
     #     "fruits": ["apple", "orange"],
     # }
     # print(json.dumps(json_log))
-    non_json_log = "This is some random text that is not json - emitted using json.dumps() method"
-    print(json.dumps(non_json_log))
+    # non_json_log = "This is some random text that is not json - emitted using json.dumps() method"
+    # print(json.dumps(non_json_log))
     # non_json_log_2 = "This is some random text that is not json - emitted raw"
     # print(non_json_log_2)
+    execution_id = context.aws_request_id
 
     snsEventMsg = {
         "message": "CloudWatch alarm event, new state value: CloudWatchAlarmState.ALARM sent to slack. Status: 200",
@@ -32,6 +33,7 @@ def lambda_handler(event, context):
         "level": "INFO",
         "line": "129",
         "process": "16",
+        "execution_id": execution_id
     }
 
     checkCutoffDateAndProcessMsgs = {
@@ -51,6 +53,7 @@ def lambda_handler(event, context):
         "file": "main.py",
         "name": "ingestor_filter.app.main",
         "line": "161",
+        "execution_id": execution_id
     }
 
     cutoffDate = {
@@ -71,6 +74,7 @@ def lambda_handler(event, context):
         "file": "main.py",
         "name": "ingestor_filter.app.main",
         "line": "189",
+        "execution_id": execution_id
     }
 
     deleteMsgInvalidSchema = {
@@ -138,6 +142,7 @@ def lambda_handler(event, context):
         "file": "main.py",
         "name": "ingestor_filter.app.main",
         "line": "72",
+        "execution_id": execution_id
     }
 
     creaint_prod_infra_creative_ingestion_enqueuer_Enqueuer_log = {
@@ -153,6 +158,7 @@ def lambda_handler(event, context):
         "file": "main.py",
         "aws_request_id": "411ad72f-e4b2-412a-a233-cd7f2649ac8b",
         "team": "CREAINT",
+        "execution_id": execution_id
     }
 
     print(json.dumps(snsEventMsg))

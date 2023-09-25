@@ -226,6 +226,39 @@ Resources:
         ReadCapacityUnits: 10
         WriteCapacityUnits: 10
 
+  LogstashRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: KinesisAccessRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: "arn:aws:iam::687751045556:root"
+            Action:
+              - sts:AssumeRole
+              - sts:TagSession
+      Policies:
+        - PolicyName: KinesisAccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kinesis:DescribeStream
+                  - kinesis:DescribeStreamConsumer
+                  - kinesis:DescribeStreamSummary
+                  - kinesis:GetRecords
+                  - kinesis:GetShardIterator
+                  - kinesis:ListShards
+                  - kinesis:ListStreams
+                  - kinesis:PutRecord
+                  - kinesis:PutRecords
+                  - kinesis:SubscribeToShard
+                Resource:
+                  - !GetAtt KinesisStream.Arn
+
 
 ##########################################################################
 #  OUTPUTS                                                               #

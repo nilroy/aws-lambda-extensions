@@ -258,6 +258,27 @@ Resources:
                   - kinesis:SubscribeToShard
                 Resource:
                   - !GetAtt KinesisStream.Arn
+              - Effect: Allow
+                Action:
+                  - dynamodb:CreateTable
+                  - dynamodb:BatchGetItem
+                  - dynamodb:PutItem
+                  - dynamodb:DescribeTable
+                  - dynamodb:DeleteItem
+                  - dynamodb:GetItem
+                  - dynamodb:Scan
+                  - dynamodb:Query
+                  - dynamodb:UpdateItem
+                Resource:
+                  - "arn:aws:dynamodb:*:687751045556:table/s3-logs-extension-demo-dynamodb-table/index/*"
+                  - "arn:aws:dynamodb:*:687751045556:table/s3-logs-extension-demo-dynamodb-table"
+
+              - Effect: Allow
+                Action:
+                  - dynamodb:ListGlobalTables
+                  - dynamodb:ListTables
+                Resource: "*"
+        
 
 
 ##########################################################################

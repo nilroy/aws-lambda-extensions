@@ -1,4 +1,4 @@
-FROM dev.smartly.af/devcontainer-base:2.0.0
+FROM dev.smartly.af/devcontainer-base:2.1.0
 
 ARG USER_NAME
 ARG USER_SHELL
